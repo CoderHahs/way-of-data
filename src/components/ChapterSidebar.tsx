@@ -8,7 +8,7 @@ interface ChapterSidebarProps {
 export default function ChapterSidebar({ current, total, onSelect, onHome }: ChapterSidebarProps) {
   return (
     <aside
-      className="fixed left-0 top-0 w-14 z-50 flex flex-col border-r border-[#FAF9F5]/10"
+      className="hidden md:flex fixed left-0 top-0 w-14 z-50 flex-col border-r border-[#FAF9F5]/10"
       style={{ backgroundColor: '#2C2A25', height: '100dvh', minHeight: '100vh' }}
     >
       <button
