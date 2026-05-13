@@ -73,17 +73,18 @@ export default function HomePage({ onBegin }: HomePageProps) {
 
   return (
     <div
-      className="h-full w-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden"
+      className="h-full w-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden gap-8"
       style={{ backgroundColor: '#2C2A25' }}
       onClick={onBegin}
     >
-      <div className="flex flex-col items-center max-w-xl px-8">
+      <div className="flex flex-col items-center">
         <h1
-          className="text-[#FAF9F5] text-center leading-[1.6] font-light"
+          className="text-[#FAF9F5] text-center font-light uppercase"
           style={{
             fontFamily: '"Cormorant Garamond", serif',
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            letterSpacing: '0.5em',
+            fontSize: 'clamp(3.5rem, 10vw, 7rem)',
+            letterSpacing: '0.35em',
+            lineHeight: 1.2,
           }}
         >
           <span className="block">THE WAY</span>
@@ -91,26 +92,28 @@ export default function HomePage({ onBegin }: HomePageProps) {
         </h1>
 
         <p
-          className="text-xl md:text-2xl text-[#FAF9F5]/80 italic text-center mt-6"
+          className="text-2xl md:text-3xl text-[#FAF9F5]/80 italic text-center mt-4"
           style={{ fontFamily: '"Cormorant Garamond", serif' }}
         >
           The Timeless Art of Understanding
         </p>
+      </div>
 
-        <div className="mt-10">
-          <canvas ref={canvasRef} />
-        </div>
+      <div>
+        <canvas ref={canvasRef} />
+      </div>
 
-        <div className="mt-10 text-center space-y-1">
-          <p className="text-[#FAF9F5]/60 text-base" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-            Inspired by the Tao Te Ching
+      <div className="flex flex-col items-center">
+        <div className="text-center space-y-1 mb-4">
+          <p className="text-[#FAF9F5]/60 text-lg md:text-xl" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+            Inspired by the Tao Te Ching & Rick Rubin
           </p>
-          <p className="text-[#FAF9F5]/60 text-base" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+          <p className="text-[#FAF9F5]/60 text-lg md:text-xl" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
             Written for the age of intelligence
           </p>
         </div>
 
-        <p className="mt-10 text-xs text-[#FAF9F5]/30 tracking-widest uppercase animate-pulse">
+        <p className="text-sm text-[#FAF9F5]/30 tracking-widest uppercase animate-pulse">
           Click anywhere to begin
         </p>
       </div>

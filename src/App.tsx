@@ -109,7 +109,7 @@ function App() {
             className="text-xs tracking-[0.2em] text-[#FAF9F5]/40 uppercase"
             style={{ fontFamily: 'sans-serif' }}
           >
-            THE WAY OF DATA
+            THE WAY OF DATA — Hrithik Shah
           </span>
         </footer>
       </div>
