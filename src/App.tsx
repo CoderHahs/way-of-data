@@ -11,6 +11,8 @@ function App() {
   const [visible, setVisible] = useState(true)
   const isTransitioning = useRef(false)
   const contentRef = useRef<HTMLDivElement>(null)
+  const touchStartY = useRef(0)
+  const touchStartScroll = useRef(0)
 
   const goToChapter = useCallback((index: number) => {
     if (index === currentIndex || isTransitioning.current) return
@@ -30,6 +32,29 @@ function App() {
     if (e.deltaY > 0 && currentIndex < chapters.length - 1) {
       goToChapter(currentIndex + 1)
     } else if (e.deltaY < 0 && currentIndex > 0) {
+      goToChapter(currentIndex - 1)
+    }
+  }, [currentIndex, goToChapter])
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY
+    touchStartScroll.current = contentRef.current?.scrollTop ?? 0
+  }, [])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (isTransitioning.current) return
+    const el = contentRef.current
+    if (!el) return
+
+    const deltaY = touchStartY.current - e.changedTouches[0].clientY
+    if (Math.abs(deltaY) < 60) return
+
+    const atTop = touchStartScroll.current <= 0 && deltaY < 0
+    const atBottom = touchStartScroll.current + el.clientHeight >= el.scrollHeight - 5 && deltaY > 0
+
+    if (atBottom && currentIndex < chapters.length - 1) {
+      goToChapter(currentIndex + 1)
+    } else if (atTop && currentIndex > 0) {
       goToChapter(currentIndex - 1)
     }
   }, [currentIndex, goToChapter])
@@ -64,6 +89,8 @@ function App() {
           className="flex-1 overflow-y-auto md:overflow-hidden scrollbar-hide"
           style={{ backgroundColor: '#2C2A25' }}
           onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <div
             className="min-h-full md:h-full w-full transition-opacity duration-400 ease-in-out"
