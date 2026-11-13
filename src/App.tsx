@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { chapters } from './data/chapters'
 import HomePage from './components/HomePage'
 import ChapterView from './components/ChapterView'
@@ -60,60 +61,68 @@ function App() {
   }, [currentIndex, goToChapter])
 
   if (!started) {
-    return <HomePage onBegin={() => setStarted(true)} />
+    return (
+      <>
+        <HomePage onBegin={() => setStarted(true)} />
+        <Analytics />
+      </>
+    )
   }
 
   return (
-    <div className="h-full w-full flex overflow-hidden" style={{ backgroundColor: '#2C2A25' }}>
-      <ChapterSidebar
-        current={currentIndex}
-        total={chapters.length}
-        onSelect={goToChapter}
-        onHome={() => setStarted(false)}
-      />
+    <>
+      <div className="h-full w-full flex overflow-hidden" style={{ backgroundColor: '#2C2A25' }}>
+        <ChapterSidebar
+          current={currentIndex}
+          total={chapters.length}
+          onSelect={goToChapter}
+          onHome={() => setStarted(false)}
+        />
 
-      <div className="flex-1 flex flex-col min-w-0 md:ml-14">
-        {/* Mobile header */}
-        <div className="md:hidden relative">
-          <MobileHeader
-            current={currentIndex}
-            total={chapters.length}
-            onSelect={goToChapter}
-            onHome={() => setStarted(false)}
-          />
-        </div>
-
-        {/* Content area */}
-        <div
-          ref={contentRef}
-          className="flex-1 overflow-y-auto md:overflow-hidden scrollbar-hide"
-          style={{ backgroundColor: '#2C2A25' }}
-          onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className="min-h-full md:h-full w-full transition-opacity duration-400 ease-in-out"
-            style={{ opacity: visible ? 1 : 0 }}
-          >
-            <ChapterView chapter={chapters[currentIndex]} />
+        <div className="flex-1 flex flex-col min-w-0 md:ml-14">
+          {/* Mobile header */}
+          <div className="md:hidden relative">
+            <MobileHeader
+              current={currentIndex}
+              total={chapters.length}
+              onSelect={goToChapter}
+              onHome={() => setStarted(false)}
+            />
           </div>
-        </div>
 
-        {/* Desktop footer */}
-        <footer
-          className="hidden md:block flex-shrink-0 py-3 px-8 text-center"
-          style={{ backgroundColor: '#2C2A25' }}
-        >
-          <span
-            className="text-xs tracking-[0.2em] text-[#FAF9F5]/40 uppercase"
-            style={{ fontFamily: 'sans-serif' }}
+          {/* Content area */}
+          <div
+            ref={contentRef}
+            className="flex-1 overflow-y-auto md:overflow-hidden scrollbar-hide"
+            style={{ backgroundColor: '#2C2A25' }}
+            onWheel={handleWheel}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
-            THE WAY OF DATA — Hrithik Shah
-          </span>
-        </footer>
+            <div
+              className="min-h-full md:h-full w-full transition-opacity duration-400 ease-in-out"
+              style={{ opacity: visible ? 1 : 0 }}
+            >
+              <ChapterView chapter={chapters[currentIndex]} />
+            </div>
+          </div>
+
+          {/* Desktop footer */}
+          <footer
+            className="hidden md:block flex-shrink-0 py-3 px-8 text-center"
+            style={{ backgroundColor: '#2C2A25' }}
+          >
+            <span
+              className="text-xs tracking-[0.2em] text-[#FAF9F5]/40 uppercase"
+              style={{ fontFamily: 'sans-serif' }}
+            >
+              THE WAY OF DATA — Hrithik Shah
+            </span>
+          </footer>
+        </div>
       </div>
-    </div>
+      <Analytics />
+    </>
   )
 }
 
